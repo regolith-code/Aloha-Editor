@@ -1,4 +1,4 @@
-describe("CharacterPicker Plugin", () => {
+describe("TextColor Plugin", () => {
   beforeEach(() => {
     cy.visit("http://localhost:8080/demo/cypress/textcolor-plugin-testing");
     cy.get("#main").click();
