@@ -5,20 +5,20 @@ describe("Table of Contents Plugin", () => {
     cy.get("#ui-id-2").click();
   });
 
-  //   it("opens Aloha Editor UI when clicked", () => {
-  //     cy.get(".aloha-ui.aloha-ui-toolbar.ui-draggable").should("exist");
-  //   });
+  it("opens Aloha Editor UI when clicked", () => {
+    cy.get(".aloha-ui.aloha-ui-toolbar.ui-draggable").should("exist");
+  });
 
-  //   it('creates a "Table of contents" button on Insert tab', () => {
-  //     cy.get("#tab-ui-container-2").within(() => {
-  //       cy.get("span").contains("Table of contents").should("be.visible");
-  //     });
-  //   });
+  it('creates a "Table of contents" button on Insert tab', () => {
+    cy.get("#tab-ui-container-2").within(() => {
+      cy.get("span").contains("Table of contents").should("be.visible");
+    });
+  });
 
-  //   it("creates an ordered list when clicked", () => {
-  //     createTableOfContents();
-  //     cy.get("#toc").should("be.visible").should("have.prop", "tagName", "OL");
-  //   });
+  it("creates an ordered list when clicked", () => {
+    createTableOfContents();
+    cy.get("#toc").should("be.visible").should("have.prop", "tagName", "OL");
+  });
 
   it("respects the header order and hierarchy in the list", () => {
     createTableOfContents();
