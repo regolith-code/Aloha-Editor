@@ -1,4 +1,4 @@
-describe("TextColor Plugin", () => {
+describe("Wai-Lang Plugin", () => {
   beforeEach(() => {
     cy.visit("http://localhost:8080/demo/cypress/wai-lang-plugin-testing");
     cy.get("#main").click();
