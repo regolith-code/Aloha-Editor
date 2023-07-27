@@ -1,6 +1,6 @@
 describe('dom-to-xhtml plugin', () => {
 
-    const URL = 'http://localhost:8080/demo/modules/dom-to-xhtml-plugin.html'
+    const URL = 'http://localhost:8080/demo/modules/dom-to-xhtml.html'
 
     it('Check ', () => {
         cy.visit(URL)
@@ -10,7 +10,7 @@ describe('dom-to-xhtml plugin', () => {
         cy.window().then((win) => {
             const editable = win.Aloha.getEditableById('content');
             const xhtmlContent = editable.getContents();
-            expect(xhtmlContent).to.match('/<p>DOM-TO-XHTML PLUGIN<\/p>/');
+            expect(xhtmlContent).to.match(/<p>\s*DOM-TO-XHTML PLUGIN\s*<\/p>/);
         });
     })
 })
