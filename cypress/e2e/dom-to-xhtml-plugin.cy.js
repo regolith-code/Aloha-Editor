@@ -5,12 +5,12 @@ describe('dom-to-xhtml plugin', () => {
     it('Check ', () => {
         cy.visit(URL)
       
-        cy.get('#content').click()
+        cy.get('#content').click().type('{enter}demo')
 
         cy.window().then((win) => {
             const editable = win.Aloha.getEditableById('content');
             const xhtmlContent = editable.getContents();
-            expect(xhtmlContent).to.match(/<p>\s*DOM-TO-XHTML PLUGIN\s*<\/p>/);
+            expect(xhtmlContent).to.match(/<p>\s*DOM-TO-XHTML PLUGIN\s*<\/p><p>demo<\/p>/);
         });
     })
 })
