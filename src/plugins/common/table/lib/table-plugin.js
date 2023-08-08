@@ -1229,7 +1229,6 @@ define([
 			icon: "aloha-icon aloha-icon-deletetable",
 			scope: this.name + '.cell',
 			click: function() {
-				console.log(that.activeTable)
 				if (that.activeTable) {
 					var aTable = that.activeTable;
 					Dialog.confirm({
