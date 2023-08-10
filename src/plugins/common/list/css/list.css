@@ -29,7 +29,7 @@
 * Fix for incorrect display of MenuButton and Submenu
 */
 .aloha.aloha-toolbar .aloha-ui-menubutton-container .ui-buttonset {
-	width: 60px;
+	width: 38px;
 }
 
 .aloha .aloha-ui-toolbar .aloha-ui-menubutton-menu {
