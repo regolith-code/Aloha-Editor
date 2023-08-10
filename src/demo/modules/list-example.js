@@ -1,5 +1,4 @@
 Aloha.ready(function () {  
-    Aloha.jQuery('#content').aloha();
 
     function removeClassListItem(...ulClasses) {
         ulClasses.forEach(ulClass => {
