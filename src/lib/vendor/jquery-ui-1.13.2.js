@@ -5019,12 +5019,13 @@ define('jqueryui', ['jquery'], function (jQuery) {
 
 					// Prevent focus from sticking to links inside menu after clicking
 					// them (focus should always stay on UL during navigation).
-					"mousedown .ui-menu-item": function( event ) {
+					"mousedown .ui-menu-item > a": function( event ) {
 						event.preventDefault();
-
-						this._activateItem( event );
 					},
-					"click .ui-menu-item": function( event ) {
+					"click .ui-state-disabled > a": function( event ) {
+						event.preventDefault();
+					},
+					"click .ui-menu-item:has(a)": function( event ) {
 						var target = $( event.target );
 						var active = $( $.ui.safeActiveElement( this.document[ 0 ] ) );
 						if ( !this.mouseHandled && target.not( ".ui-state-disabled" ).length ) {
@@ -5052,8 +5053,13 @@ define('jqueryui', ['jquery'], function (jQuery) {
 							}
 						}
 					},
-					"mouseenter .ui-menu-item": "_activateItem",
-					"mousemove .ui-menu-item": "_activateItem",
+					"mouseenter .ui-menu-item": function( event ) {
+						var target = $( event.currentTarget );
+						// Remove ui-state-active class from siblings of the newly focused menu item
+						// to avoid a jump caused by adjacent elements both having a class with a border
+						target.siblings().children( ".ui-state-active" ).removeClass( "ui-state-active" );
+						this.focus( event, target );
+					},
 					mouseleave: "collapseAll",
 					"mouseleave .ui-menu": "collapseAll",
 					focus: function( event, keepActiveItem ) {
@@ -6344,12 +6350,12 @@ define('jqueryui', ['jquery'], function (jQuery) {
 			},
 
 			_create: function() {
+				this.element.addClass( "ui-buttonset" );
 				this._enhance();
 			},
 
 			// To support the enhanced option in jQuery Mobile, we isolate DOM manipulation
 			_enhance: function() {
-				this.element.attr( "role", "toolbar" );
 				this.refresh();
 			},
 
@@ -6550,45 +6556,27 @@ define('jqueryui', ['jquery'], function (jQuery) {
 			},
 
 			refresh: function() {
-				var children,
-					that = this;
+				var rtl = this.element.css( "direction" ) === "rtl";
 
-				this._addClass( "ui-controlgroup ui-controlgroup-" + this.options.direction );
-
-				if ( this.options.direction === "horizontal" ) {
-					this._addClass( null, "ui-helper-clearfix" );
-				}
-				this._initWidgets();
-
-				children = this.childWidgets;
-
-				// We filter here because we need to track all childWidgets not just the visible ones
-				if ( this.options.onlyVisible ) {
-					children = children.filter( ":visible" );
-				}
-
-				if ( children.length ) {
-
-					// We do this last because we need to make sure all enhancment is done
-					// before determining first and last
-					$.each( [ "first", "last" ], function( index, value ) {
-						var instance = children[ value ]().data( "ui-controlgroup-data" );
-
-						if ( instance && that[ "_" + instance.widgetName + "Options" ] ) {
-							var options = that[ "_" + instance.widgetName + "Options" ](
-								children.length === 1 ? "only" : value
-							);
-							options.classes = that._resolveClassesValues( options.classes, instance );
-							instance.element[ instance.widgetName ]( options );
-						} else {
-							that._updateCornerClass( children[ value ](), value );
-						}
-					} );
-
-					// Finally call the refresh method on each of the child widgets.
-					this._callChildMethod( "refresh" );
-				}
-			}
+				this.buttons = this.element.find( this.options.items )
+					.filter( ":ui-button" )
+					.button( "refresh" )
+					.end()
+					.not( ":ui-button" )
+					.button()
+					.end()
+					.map(function() {
+						return $( this ).button( "widget" )[ 0 ];
+					})
+					.removeClass( "ui-corner-all ui-corner-left ui-corner-right" )
+					.filter( ":first" )
+					.addClass( rtl ? "ui-corner-right" : "ui-corner-left" )
+					.end()
+					.filter( ":last" )
+					.addClass( rtl ? "ui-corner-left" : "ui-corner-right" )
+					.end()
+					.end();
+			},
 		} );
 
 		/*!
@@ -18368,18 +18356,26 @@ define('jqueryui', ['jquery'], function (jQuery) {
 				}
 
 				this.tablist
+					.removeClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 					.removeAttr( "role" )
 					.off( this.eventNamespace );
 
 				this.anchors
-					.removeAttr( "role tabIndex" )
+					.removeClass( "ui-tabs-anchor" )
+					.removeAttr( "role" )
+					.removeAttr( "tabIndex" )
+					.removeData( "href.tabs" )
+					.removeData( "load.tabs" )
 					.removeUniqueId();
 
 				this.tabs.add( this.panels ).each( function() {
 					if ( $.data( this, "ui-tabs-destroy" ) ) {
 						$( this ).remove();
 					} else {
-						$( this ).removeAttr( "role tabIndex " +
+						$( this )
+							.removeClass( "ui-state-default ui-state-active ui-state-disabled " +
+								"ui-corner-top ui-corner-bottom ui-widget-content ui-tabs-active ui-tabs-panel" )
+							.removeAttr( "role tabIndex " +
 							"aria-live aria-busy aria-selected aria-labelledby aria-hidden aria-expanded" );
 					}
 				} );
