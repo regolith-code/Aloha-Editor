@@ -5259,65 +5259,61 @@ define('jqueryui', ['jquery'], function (jQuery) {
 			},
 
 			refresh: function() {
-				var menus, items, newSubmenus, newItems, newWrappers,
-					that = this,
-					icon = this.options.icons.submenu,
-					submenus = this.element.find( this.options.menus );
-
-				this._toggleClass( "ui-menu-icons", null, !!this.element.find( ".ui-icon" ).length );
-
 				// Initialize nested menus
-				newSubmenus = submenus.filter( ":not(.ui-menu)" )
+				var menus,
+				icon = this.options.icons.submenu,
+				submenus = this.element.find( this.options.menus + ":not(.ui-menu)" )
+					.addClass( "ui-menu ui-widget ui-widget-content ui-corner-all" )
 					.hide()
-					.attr( {
+					.attr({
 						role: this.options.role,
 						"aria-hidden": "true",
 						"aria-expanded": "false"
-					} )
-					.each( function() {
-						var menu = $( this ),
-							item = menu.prev(),
-							submenuCaret = $( "<span>" ).data( "ui-menu-submenu-caret", true );
+					});
 
-						that._addClass( submenuCaret, "ui-menu-icon", "ui-icon " + icon );
-						item
-							.attr( "aria-haspopup", "true" )
-							.prepend( submenuCaret );
-						menu.attr( "aria-labelledby", item.attr( "id" ) );
-					} );
+			// Don't refresh list items that are already adapted
+			menus = submenus.add( this.element );
 
-				this._addClass( newSubmenus, "ui-menu", "ui-widget ui-widget-content ui-front" );
-
-				menus = submenus.add( this.element );
-				items = menus.find( this.options.items );
-
-				// Initialize menu-items containing spaces and/or dashes only as dividers
-				items.not( ".ui-menu-item" ).each( function() {
-					var item = $( this );
-					if ( that._isDivider( item ) ) {
-						that._addClass( item, "ui-menu-divider", "ui-widget-content" );
-					}
-				} );
-
-				// Don't refresh list items that are already adapted
-				newItems = items.not( ".ui-menu-item, .ui-menu-divider" );
-				newWrappers = newItems.children()
-					.not( ".ui-menu" )
+			menus.children( ":not(.ui-menu-item):has(a)" )
+				.addClass( "ui-menu-item" )
+				.attr( "role", "presentation" )
+				.children( "a" )
 					.uniqueId()
-					.attr( {
+					.addClass( "ui-menu-item-wrapper" )
+					.attr({
 						tabIndex: -1,
 						role: this._itemRole()
-					} );
-				this._addClass( newItems, "ui-menu-item" )
-					._addClass( newWrappers, "ui-menu-item-wrapper" );
+					});
 
-				// Add aria-disabled attribute to any disabled menu item
-				items.filter( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
-
-				// If the active item has been removed, blur the menu
-				if ( this.active && !$.contains( this.element[ 0 ], this.active[ 0 ] ) ) {
-					this.blur();
+			// Initialize unlinked menu-items containing spaces and/or dashes only as dividers
+			menus.children( ":not(.ui-menu-item)" ).each(function() {
+				var item = $( this );
+				// hyphen, em dash, en dash
+				if ( !/[^\-—–\s]/.test( item.text() ) ) {
+					item.addClass( "ui-widget-content ui-menu-divider" );
 				}
+			});
+
+			// Add aria-disabled attribute to any disabled menu item
+			menus.children( ".ui-state-disabled" ).attr( "aria-disabled", "true" );
+
+			submenus.each(function() {
+				var menu = $( this ),
+					item = menu.prev( "a" ),
+					submenuCarat = $( "<span>" )
+						.addClass( "ui-menu-icon ui-icon " + icon )
+						.data( "ui-menu-submenu-carat", true );
+
+				item
+					.attr( "aria-haspopup", "true" )
+					.prepend( submenuCarat );
+				menu.attr( "aria-labelledby", item.attr( "id" ) );
+			});
+
+			// If the active item has been removed, blur the menu
+			if ( this.active && !$.contains( this.element[ 0 ], this.active[ 0 ] ) ) {
+				this.blur();
+			}
 			},
 
 			_itemRole: function() {
@@ -6935,6 +6931,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 				this._addClass(baseClasses);
 				this._setOption( "disabled", this.options.disabled );
 				this._enhance();
+				this._resetButton();
 
 				if ( this.element.is( "a" ) ) {
 					this._on( {
@@ -6954,6 +6951,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 						}
 					} );
 				}
+				
 			},
 
 			_enhance: function() {
@@ -7116,6 +7114,47 @@ define('jqueryui', ['jquery'], function (jQuery) {
 				}
 
 				this._updateTooltip();
+			},
+			_resetButton: function() {
+				if ( this.type === "input" ) {
+					if ( this.options.label ) {
+						this.element.val( this.options.label );
+					}
+					return;
+				}
+				var buttonElement = this.element.removeClass( typeClasses ),
+					buttonText = $( "<span></span>", this.document[0] )
+						.addClass( "ui-button-text" )
+						.html( this.options.label )
+						.appendTo( buttonElement.empty() )
+						.text(),
+					icons = this.options.icons,
+					multipleIcons = icons.primary && icons.secondary,
+					buttonClasses = [];
+		
+				if ( icons.primary || icons.secondary ) {
+					
+					if ( this.options.text ) {
+						buttonClasses.push( "ui-button-text-icon" + ( multipleIcons ? "s" : ( icons.primary ? "-primary" : "-secondary" ) ) );
+					}
+		
+					if ( icons.primary ) {
+						buttonElement.prepend( "<span class='ui-button-icon-primary ui-icon " + icons.primary + "'></span>" );
+					}
+		
+					if ( icons.secondary ) {
+						buttonElement.append( "<span class='ui-button-icon-secondary ui-icon " + icons.secondary + "'></span>" );
+					}
+		
+					if ( !this.options.text ) {
+						buttonClasses.push( multipleIcons ? "ui-button-icons-only" : "ui-button-icon-only" );
+		
+						
+					}
+				} else {
+					buttonClasses.push( "ui-button-text-only" );
+				}
+				buttonElement.addClass( buttonClasses.join( " " ) );
 			}
 		} );
 
@@ -12946,6 +12985,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 				if ( key === "title" ) {
 					this._title( this.uiDialogTitlebar.find( ".ui-dialog-title" ) );
 				}
+				this._resetButton();
 			},
 
 			_size: function() {
