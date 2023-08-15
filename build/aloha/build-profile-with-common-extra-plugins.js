@@ -57,6 +57,7 @@
 		'jqgrid-locale-de': 'vendor/grid.locale.de', // Mutates jqgrid
 		'repository-browser-i18n-de': 'vendor/repository-browser/js/repository-browser-unminified',
 		'repository-browser-i18n-en': 'vendor/repository-browser/js/repository-browser-unminified',
+		'jquery-browser': 'vendor/jquery.browser',
 
 		// Shortcuts for all common plugins
 		"ui": "../plugins/common/ui/lib",

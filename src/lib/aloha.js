@@ -329,7 +329,8 @@
 			'jqgrid':            {'jquery': 'aloha/jquery'},
 			'jqgrid-locale-en':  {'jquery': 'aloha/jquery'},
 			'jqgrid-locale-de':  {'jquery': 'aloha/jquery'},
-			'jquery-layout':     {'jquery': 'aloha/jquery'}
+			'jquery-layout':     {'jquery': 'aloha/jquery'},
+			'jquery-browser':     {'jquery': 'aloha/jquery'}
 		};
 
 		/**
@@ -362,6 +363,7 @@
 		var defaultPaths = {
 			jquery: 'vendor/jquery-3.7.0',
 			jqueryui: 'vendor/jquery-ui-1.13.2',
+			'jquery-browser': 'vendor/jquery.browser',
 		};
 
 		var browserPaths = {
@@ -374,7 +376,8 @@
 			'jqgrid-locale-en': 'vendor/grid.locale.en', // Mutates jqgrid
 			'jqgrid-locale-de': 'vendor/grid.locale.de', // Mutates jqgrid
 			'repository-browser-i18n-de': 'vendor/repository-browser/js/repository-browser-unminified',
-			'repository-browser-i18n-en': 'vendor/repository-browser/js/repository-browser-unminified'
+			'repository-browser-i18n-en': 'vendor/repository-browser/js/repository-browser-unminified',
+			'jquery-browser': 'vendor/jquery.browser'
 		};
 
 		var requireConfig = mergeObjects(
@@ -517,6 +520,7 @@
 
 		define('aloha', [
 			'aloha/jquery',
+			'jquery-browser',
 			'util/json2',
 			'aloha/rangy-core',
 			'util/class',
