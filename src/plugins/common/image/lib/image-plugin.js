@@ -700,28 +700,44 @@ define([
       /**
        * Handle mousewheel,keyup actions on both fields
        */
-      var $heightField = $("#" + plugin.ui.imgResizeHeightField.getInputId());
+      const heightFieldSelector =
+        "#" + plugin.ui.imgResizeHeightField.getInputId();
+
       var heightEventData = {
         fieldName: "height",
         maxValue: plugin.ui.imgResizeHeightField.maxValue,
         minValue: plugin.ui.imgResizeHeightField.minValue,
       };
-      $heightField.on("keyup", heightEventData, handleKeyUpEventOnField);
-      $heightField.on(
-        "mousewheel",
+      $(document).on(
+        "keyup",
+        heightFieldSelector,
+        heightEventData,
+        handleKeyUpEventOnField
+      );
+      $(document).on(
+        "wheel",
+        heightFieldSelector,
         heightEventData,
         handleMouseWheelEventOnField
       );
 
-      var $widthField = $("#" + plugin.ui.imgResizeWidthField.getInputId());
+      const widthFieldSelector =
+        "#" + plugin.ui.imgResizeWidthField.getInputId();
+
       var widthEventData = {
         fieldName: "width",
         maxValue: plugin.ui.imgResizeWidthField.maxValue,
         minValue: plugin.ui.imgResizeWidthField.minValue,
       };
-      $widthField.on("keyup", widthEventData, handleKeyUpEventOnField);
-      $widthField.on(
-        "mousewheel",
+      $(document).on(
+        "keyup",
+        widthFieldSelector,
+        widthEventData,
+        handleKeyUpEventOnField
+      );
+      $(document).on(
+        "wheel",
+        widthFieldSelector,
         widthEventData,
         handleMouseWheelEventOnField
       );
