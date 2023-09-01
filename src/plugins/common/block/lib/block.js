@@ -64,7 +64,7 @@ define([
 	/**
 	 * An aloha block has the following special properties, being readable through the
 	 * "attr" function:
-	 * - aloha-block-type -- TYPE of the AlohaBlock as registered by the BlockManager
+	 * - alohaBlockType -- TYPE of the AlohaBlock as registered by the BlockManager
 	 *
 	 * @name block.block.AbstractBlock
 	 * @class An abstract block that must be used as a base class for custom blocks
@@ -545,7 +545,7 @@ define([
 
 			// Activate current block
 			if (this.$element.attr('data-block-skip-scope') !== 'true') {
-				Scopes.setScope('Aloha.Block.' + this.attr('aloha-block-type'));
+				Scopes.setScope('Aloha.Block.' + this.attr('alohaBlockType'));
 			}
 			this.$element.addClass('aloha-block-active');
 			this._highlight();

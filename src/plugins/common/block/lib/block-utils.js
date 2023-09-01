@@ -68,7 +68,7 @@ define([
 	 * @return {boolean}      true if the node is a block
 	 */
 	function isAlohaBlock(node) {
-		return $(node).data('aloha-block-type') || false;
+		return $(node).data('alohaBlockType') || false;
 	}
 
 	function isVisibleNode(node) {
