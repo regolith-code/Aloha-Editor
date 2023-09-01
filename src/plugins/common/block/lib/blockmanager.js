@@ -423,10 +423,10 @@ define([
 		initializeBlockLevelDragDrop: function () {
 			var blockmanager = this;
 			jQuery.each(Aloha.editables, function (i, editable) {
-				editable.obj.data('block-dragdrop', blockmanager._dragdropEnabled);
+				editable.obj.data('blockDragdrop', blockmanager._dragdropEnabled);
 			});
 			Aloha.bind('aloha-editable-created', function (e, editable) {
-				editable.obj.data('block-dragdrop', blockmanager._dragdropEnabled);
+				editable.obj.data('blockDragdrop', blockmanager._dragdropEnabled);
 			});
 		},
 

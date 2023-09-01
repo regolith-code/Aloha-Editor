@@ -444,7 +444,7 @@ Check the example blocks for a demo of this feature.
 
 h4. Custom Floating Menu
 
-When the Aloha Editor Blocks are active, we set a custom Floating Menu scope called  +Aloha.Block.(alohaBlockType}+, so, for example, @Aloha.Block.DefaultBlock@. You add buttons to the floating menu if you want to show them when a specific block is active.
+When the Aloha Editor Blocks are active, we set a custom Floating Menu scope called  +Aloha.Block.(aloha-block-type}+, so, for example, @Aloha.Block.DefaultBlock@. You add buttons to the floating menu if you want to show them when a specific block is active.
 
 h4. Disabling the sidebar editor
 
