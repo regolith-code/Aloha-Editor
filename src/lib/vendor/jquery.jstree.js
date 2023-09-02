@@ -2837,7 +2837,7 @@ define('jstree', ['jquery'], function (jQuery) {
 					if(this._get_settings().checkbox.two_state) {
 						if(state) { 
 							obj.removeClass("jstree-checked").addClass("jstree-unchecked"); 
-							if(rc) { obj.children(":checkbox").removeAttr("checked"); }
+							if(rc) { obj.children(":checkbox").prop( "checked", false ); }
 						}
 						else { 
 							obj.removeClass("jstree-unchecked").addClass("jstree-checked"); 
@@ -2849,7 +2849,7 @@ define('jstree', ['jquery'], function (jQuery) {
 							coll = obj.find("li").addBack();
 							if(!coll.filter(".jstree-checked, .jstree-undetermined").length) { return false; }
 							coll.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked"); 
-							if(rc) { coll.children(":checkbox").removeAttr("checked"); }
+							if(rc) { coll.children(":checkbox").prop( "checked", false ); }
 						}
 						else { 
 							coll = obj.find("li").addBack();
@@ -2864,18 +2864,18 @@ define('jstree', ['jquery'], function (jQuery) {
 							if(state) {
 								if($this.children("ul").children("li.jstree-checked, li.jstree-undetermined").length) {
 									$this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-									if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").removeAttr("checked"); }
+									if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop( "checked", false ); }
 									return false;
 								}
 								else {
 									$this.removeClass("jstree-checked jstree-undetermined").addClass("jstree-unchecked");
-									if(rc) { $this.children(":checkbox").removeAttr("checked"); }
+									if(rc) { $this.children(":checkbox").prop( "checked", false ); }
 								}
 							}
 							else {
 								if($this.children("ul").children("li.jstree-unchecked, li.jstree-undetermined").length) {
 									$this.parentsUntil(".jstree", "li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-									if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").removeAttr("checked"); }
+									if(rc) { $this.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop( "checked", false ); }
 									return false;
 								}
 								else {
@@ -2947,7 +2947,7 @@ define('jstree', ['jquery'], function (jQuery) {
 					else if(a === c) { this.change_state(obj, false); }
 					else { 
 						obj.parentsUntil(".jstree","li").addBack().removeClass("jstree-checked jstree-unchecked").addClass("jstree-undetermined");
-						if(rc) { obj.parentsUntil(".jstree", "li").addBack().children(":checkbox").removeAttr("checked"); }
+						if(rc) { obj.parentsUntil(".jstree", "li").addBack().children(":checkbox").prop( "checked", false ); }
 					}
 				},
 				reselect : function () {
