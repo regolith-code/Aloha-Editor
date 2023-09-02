@@ -237,14 +237,14 @@ jQuery.fn = jQuery.prototype = {
 		// Need to set the expando to null on the cloned set if it exists
 		// removeData doesn't work here, IE removes it from the original as well
 		// this is primarily for IE but the data expando shouldn't be copied over in any browser
-		var clone = ret.find("*").andSelf().each(function(){
+		var clone = ret.find("*").addBack().each(function(){
 			if ( this[ expando ] != undefined )
 				this[ expando ] = null;
 		});
 		
 		// Copy the events from the original to the clone
 		if (events === true)
-			this.find("*").andSelf().each(function(i) {
+			this.find("*").addBack().each(function(i) {
 				var events = jQuery.data(this, "events");
 				for ( var type in events )
 					for ( var handler in events[type] )
