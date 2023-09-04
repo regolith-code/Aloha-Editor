@@ -198,7 +198,7 @@ define([
 		 */
 		_registerEventHandlersForDeterminingCurrentlyActiveBlock: function () {
 			var that = this;
-			this.on('block-selection-change', function (highlightedBlocks) {
+			this.bind('block-selection-change', function (highlightedBlocks) {
 				if (highlightedBlocks.length > 0) {
 					that._activeBlock = highlightedBlocks[0];
 				} else {
