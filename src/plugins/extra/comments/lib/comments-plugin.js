@@ -38,18 +38,30 @@ function(Aloha, Plugin, jQuery, FloatingMenu, i18n, i18nCore) {
 		GENTICS = window.GENTICS,
 		  Aloha	= window.Aloha;
 	
-	$.extend($.easing, {
-		easeOutExpo: function (x, t, b, c, d) {
-			return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
-		},
-		easeOutElastic: function (x, t, b, c, d) {
-			var s=1.70158;var p=0;var a=c;
-			if (t==0) return b;  if ((t/=d)==1) return b+c;  if (!p) p=d*.3;
-			if (a < Math.abs(c)) { a=c; var s=p/4; }
-			else var s = p/(2*Math.PI) * Math.asin (c/a);
-			return a*Math.pow(2,-10*t) * Math.sin( (t*d-s)*(2*Math.PI)/p ) + c + b;
-		}
-	});
+		  $.extend($.easing, {
+			easeOutExpo: function (x) {
+				return (x === 1) ? 1 : 1 - Math.pow(2, -10 * x);
+			},
+			easeOutElastic: function (x) {
+				var s = 1.70158;
+				var p = 0;
+				var a = 1; // Assuming a default amplitude of 1
+		
+				if (x === 0) return 0;
+				if (x === 1) return 1;
+		
+				if (!p) p = 0.3;
+		
+				if (a < 1) {
+					a = 1;
+					s = p / 4;
+				} else {
+					s = p / (2 * Math.PI) * Math.asin(1 / a);
+				}
+		
+				return a * Math.pow(2, -10 * x) * Math.sin((x - s) * (2 * Math.PI) / p);
+			}
+		});
 	
 	var dom_util = GENTICS.Utils.Dom,
 		clss = 'aloha-comments',

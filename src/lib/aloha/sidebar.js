@@ -47,34 +47,24 @@ define([
 	// Extend jQuery easing animations.
 	if (!$.easing.easeOutExpo) {
 		$.extend($.easing, {
-			easeOutExpo: function (x, t, b, c, d) {
-				return (t == d) ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
+			easeOutExpo: function (x) {
+				return (x === 1) ? 1 : 1 - Math.pow(2, -10 * x);
 			},
-			easeOutElastic: function (x, t, b, c, d) {
-				var m = Math,
-					s = 1.70158,
-					p = 0,
-					a = c;
-				if (!t) {
-					return b;
-				}
-				if ((t /= d) == 1) {
-					return b + c;
-				}
-				if (!p) {
-					p = d * 0.3;
-				}
-				if (a < m.abs(c)) {
-					a = c;
-					s = p / 4;
+			easeOutElastic: function (x) {
+				var c = 1, // amplitude
+					p = 0.3, // period
+					s = p / (2 * Math.PI) * Math.asin(1 / c);
+	
+				if (x === 0) {
+					return 0;
+				} else if (x === 1) {
+					return 1;
 				} else {
-					s = p / (2 * m.PI) * m.asin(c / a);
+					return -(c * Math.pow(2, 10 * (x - 1)) * Math.sin(((x - 1) * 2 * Math.PI) / p)) + 1;
 				}
-				return a * m.pow(2, -10 * t) * m.sin((t * d - s) * (2 * m.PI) / p) + c + b;
 			}
 		});
 	}
-
 	var Panel = function Panel(opts) {
 		this.id = null;
 		this.folds = {};
