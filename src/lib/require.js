@@ -1142,7 +1142,7 @@ var requirejs, require, define;
                     //Use parentName here since the plugin's name is not reliable,
                     //could be some weird string with no path that actually wants to
                     //reference the parentName's path.
-                    plugin.on("load",map.name, makeRequire(map.parentMap, true, function (deps, cb, er) {
+                    plugin.load(map.name, makeRequire(map.parentMap, true, function (deps, cb, er) {
                         deps.rjsSkipMap = true;
                         return context.require(deps, cb, er);
                     }), load, config);
