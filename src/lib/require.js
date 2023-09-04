@@ -923,11 +923,11 @@ var requirejs, require, define;
                 //ask the plugin to load it now.
                 if (this.shim) {
                     makeRequire(this, true)(this.shim.deps || [], bind(this, function () {
-                        return map.prefix ? this.callPlugin() : this.trigger("load");
+                        return map.prefix ? this.callPlugin() : this.load();
                     }));
                 } else {
                     //Regular dependency.
-                    return map.prefix ? this.callPlugin() : this.trigger("load");
+                    return map.prefix ? this.callPlugin() : this.load();
                 }
             },
 
