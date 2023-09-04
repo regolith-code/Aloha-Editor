@@ -937,7 +937,7 @@ var requirejs, require, define;
                 //Regular dependency.
                 if (!urlFetched[url]) {
                     urlFetched[url] = true;
-                    context.on("load",this.map.id, url);
+                    context.load(this.map.id, url);
                 }
             },
 
@@ -1668,7 +1668,7 @@ var requirejs, require, define;
             //Delegates to req.load. Broken out as a separate function to
             //allow overriding in the optimizer.
             load: function (id, url) {
-                req.on("load",context, id, url);
+                req.load(context, id, url);
             },
 
             /**
