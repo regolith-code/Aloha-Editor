@@ -483,7 +483,7 @@ define([
 		 * whenever the viewport is resized.
 		 */
 		updateHeight: function () {
-			var h = parseInt($(window).css("height"));
+			var h = $(window).height();
 			this.container.css("height",h+"px").find('.aloha-sidebar-inner').css("height",h+"px");
 		},
 

@@ -274,7 +274,7 @@ define([
 
 		var topGutter = (parseInt($('body').css('marginTop'), 10) || 0)
 			+ (parseInt($('body').css('paddingTop'), 10) || 0);
-		if (parseInt($WINDOW.css("width")) <= SMALL_SCREEN_WIDTH) {
+		if ($WINDOW.width() <= SMALL_SCREEN_WIDTH) {
 			topGutter = 0;
 		}
 		var $surface = surface.$element;
@@ -286,7 +286,7 @@ define([
 		var availableSpace = top - scrollTop - topGutter - bodyMarginTopAdjustment;
 		// consider horizontal scrolling (important for rtl pages that are scrolled to the left)
 		left = left - scrollLeft;
-		var horizontalOverflow = left + parseInt($surface.css("width")) - parseInt($WINDOW.css("width"));
+		var horizontalOverflow = left + parseInt($surface.css("width")) - $WINDOW.width();
 
 		if (horizontalOverflow > 0) {
 			left = Math.max(0, left - horizontalOverflow);
@@ -295,7 +295,7 @@ define([
 		// never ever float outside of the visible area (to the left)
 		left = Math.max(0, left);
 
-		var editableVisible = top - scrollTop < parseInt($WINDOW.css("height"))
+		var editableVisible = top - scrollTop < $WINDOW.height()
 			&& top + parseInt(editable.obj.css("height")) >= scrollTop;
 
 		if (editableVisible) {

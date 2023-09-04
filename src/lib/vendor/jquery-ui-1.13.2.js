@@ -879,7 +879,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 						scrollLeft: withinElement.scrollLeft(),
 						scrollTop: withinElement.scrollTop(),
 						width: withinElement.outerWidth(),
-						height: parseInt(withinElement.css("heigth")) + parseInt(withinElement.css("padding-top")) + parseInt(withinElement.css("padding-bottom"))
+						height: isElemWindow? withinElement.height() : parseInt(withinElement.css("heigth")) + parseInt(withinElement.css("padding-top")) + parseInt(withinElement.css("padding-bottom"))
 					};
 				}
 			};
@@ -10283,7 +10283,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 			_cacheHelperProportions: function() {
 				this.helperProportions = {
 					width: this.helper.outerWidth(),
-					height: parseInt(this.hepler.css("height"))+parseInt(this.hepler.css("padding-top"))+parseInt(this.hepler.css("padding-bottom"))
+					height: parseInt(this.helper.css("height"))+parseInt(this.helper.css("padding-top"))+parseInt(this.helper.css("padding-bottom"))
 				};
 			},
 
@@ -10844,7 +10844,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 					if ( !o.axis || o.axis !== "x" ) {
 						if ( event.pageY - $( document ).scrollTop() < o.scrollSensitivity ) {
 							scrolled = $( document ).scrollTop( $( document ).scrollTop() - o.scrollSpeed );
-						} else if ( parseInt($( window ).css("height")) - ( event.pageY - $( document ).scrollTop() ) <
+						} else if ( $( window ).height() - ( event.pageY - $( document ).scrollTop() ) <
 							o.scrollSensitivity ) {
 							scrolled = $( document ).scrollTop( $( document ).scrollTop() + o.scrollSpeed );
 						}
@@ -10855,7 +10855,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 							scrolled = $( document ).scrollLeft(
 								$( document ).scrollLeft() - o.scrollSpeed
 							);
-						} else if ( parseInt($(window).css("width")) - ( event.pageX - $( document ).scrollLeft() ) <
+						} else if ( $(window).width() - ( event.pageX - $( document ).scrollLeft() ) <
 							o.scrollSensitivity ) {
 							scrolled = $( document ).scrollLeft(
 								$( document ).scrollLeft() + o.scrollSpeed
