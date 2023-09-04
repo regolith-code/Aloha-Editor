@@ -385,7 +385,7 @@ define([
 				|| $el.innerWidth() < el.scrollWidth;
 	}
 
-	jQuery.expr[':'].hasScroll = hasScroll;
+	jQuery.expr.pseudos.hasScroll = hasScroll;
 
 	/*
 	 * jQuery Hotkeys Plugin
