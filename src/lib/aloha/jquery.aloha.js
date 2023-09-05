@@ -59,7 +59,7 @@ define([
 
 		if (this[0].nodeType !== 3) {
 			// we are not in a text node, just insert the element at the corresponding position
-			offSize = this.children().size();
+			offSize = this.children().length;
 			if (offset > offSize) {
 				offset = offSize;
 			}
@@ -385,7 +385,7 @@ define([
 				|| parseInt($el.css("width"))-parseInt($el.css("padding-left"))-parseInt($el.css("padding-right")) < el.scrollWidth;
 	}
 
-	jQuery.expr[':'].hasScroll = hasScroll;
+	jQuery.expr.pseudos.hasScroll = hasScroll;
 
 	/*
 	 * jQuery Hotkeys Plugin
