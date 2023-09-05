@@ -289,8 +289,8 @@ define([
 		}
 
 		//adjust position if overlay element is overlapping window borders
-		var maxWidth = parseInt($WINDOW.css("width"));
-		var maxHeight = parseInt($WINDOW.css("height")) - SCROLL_BAR_HEIGHT;
+		var maxWidth = $WINDOW.width();
+		var maxHeight = $WINDOW.height() - SCROLL_BAR_HEIGHT;
 
 		if (maxWidth < offset.left + parseInt($overlay.css("width"))) {
 			offset.left = maxWidth - parseInt($overlay.css("width"));

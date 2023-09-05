@@ -808,8 +808,8 @@ define('jqueryui', ['jquery'], function (jQuery) {
 				}
 				if ( isWindow( raw ) ) {
 					return {
-						width: parseInt(elem.css("width")),
-						height: parseInt(elem.css("height")),
+						width: elem.width(),
+						height: elem.height(),
 						offset: { top: elem.scrollTop(), left: elem.scrollLeft() }
 					};
 				}

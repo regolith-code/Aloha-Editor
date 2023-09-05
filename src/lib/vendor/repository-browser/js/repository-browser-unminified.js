@@ -499,8 +499,8 @@
 			$elem.css('width', opts.maxWidth);
 			$grid.css('width', opts.maxWidth); // Fix for IE7
 
-			var $tree = tree(browser, $grid.find('.ui-layout-west'), parseInt($grid.css("height")));
-			var $list = list(browser, $grid.find('.ui-layout-center'), parseInt($grid.css("height")));
+			var $tree = tree(browser, $grid.find('.ui-layout-west'), $grid.height());
+			var $list = list(browser, $grid.find('.ui-layout-center'), $grid.height());
 			var $layout = $grid.layout({
 				west__size               : opts.treeWidth - 1,
 				west__minSize            : 0,
@@ -667,8 +667,8 @@
 				if (!this._isResizeAllowed()) {
 					return;
 				}
-				this._resizeHorizontal(this.maxWidth - parseInt($window.css("width")) + this.padding);
-				this._resizeVertical(this.maxHeight - parseInt($window.css("height")) + this.padding);
+				this._resizeHorizontal(this.maxWidth - $window.width() + this.padding);
+				this._resizeVertical(this.maxHeight - $window.height() + this.padding);
 				this._resizeInnerComponents();
 			},
 
