@@ -53,7 +53,7 @@ define([ 'jquery', 'block/blockmanager', 'aloha/sidebar', 'block/editormanager',
 		init: function() {
 			this._sidebar = Sidebar.right.show();
 
-			BlockManager.on('block-selection-change', this._onBlockSelectionChange, this);
+			BlockManager.bind('block-selection-change', this._onBlockSelectionChange, this);
 		},
 
 		/**

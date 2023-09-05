@@ -16415,7 +16415,7 @@ define('jqueryui', ['jquery'], function (jQuery) {
 						this.containers[ i ].containerCache.left = p.left;
 						this.containers[ i ].containerCache.top = p.top;
 						this.containers[ i ].containerCache.width =
-						parseInt(this.container[i].element.css("width")) + parseInt(this.container[i].element.css("padding-left")) + parseInt(this.container[i].element.css("padding-right"));
+						parseInt(this.containers[i].element.css("width")) + parseInt(this.containers[i].element.css("padding-left")) + parseInt(this.containers[i].element.css("padding-right"));
 						this.containers[ i ].containerCache.height =
 						parseInt(this.containers[i].element.css("height"))+parseInt(this.containers[i].element.css("padding-top"))+parseInt(this.containers[i].element.css("padding-bottom"));
 					}

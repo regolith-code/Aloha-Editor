@@ -155,7 +155,7 @@ define([
 			 * Event listener for block selection,
 			 * to change toolbar tab input field value
 			 */
-			BlockManager.on('block-selection-change', function (blocks){
+			BlockManager.bind('block-selection-change', function (blocks){
 				selectedBlock = blocks[0];
 				that.setHrefField();
 			});
