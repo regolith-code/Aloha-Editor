@@ -452,7 +452,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 						x.left = N($E, "left", true);
 						x.right = N($E, "right", true);
 
-						d.outerWidth = R($E.outerWidth());
+						d.outerWidth = R(parseInt($E.css("width")) + parseInt($E.css("padding-left")) + parseInt($E.css("padding-right")));
 						d.outerHeight = R(parseInt($E.css("height"))+parseInt($E.css("padding-top"))+parseInt($E.css("padding-bottom")));
 						// calc the TRUE inner-dimensions, even in quirks-mode!
 						d.innerWidth = max(0, d.outerWidth - i.left - i.right);
@@ -604,7 +604,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 							, d = $E.offset()
 							, T = d.top
 							, L = d.left
-							, R = L + $E.outerWidth()
+							, R = L + parseInt($E.css("width")) + parseInt($E.css("padding-left")) + parseInt($E.css("padding-right"))
 							, B = T + parseInt($E.css("height"))+parseInt($E.css("padding-top"))+parseInt($E.css("padding-bottom"))
 							, x = evt.pageX // evt.clientX ?
 							, y = evt.pageY // evt.clientY ?
@@ -662,7 +662,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 								+ '<ul style="font-size: 13px; font-weight: none; list-style: none; margin: 0; padding: 0 0 2px;"></ul>'
 								+ '</div>'
 							).appendTo("body");
-							$e.css('left', parseInt($(window).css("width")) - $e.outerWidth() - 5);
+							$e.css('left', parseInt($(window).css("width")) - (parseInt($e.css("width")) + parseInt($e.css("padding-left")) + parseInt($e.css("padding-right"))) - 5);
 							if ($.ui.draggable)
 								$e.draggable({handle: ':first-child'});
 							return $e;
@@ -1411,7 +1411,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 								$P.css(dim, "auto");
 								if ($C)
 									$C.css(dim, "auto");
-								size = (dim === "height") ? parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom")) : $P.outerWidth(); // MEASURE
+								size = (dim === "height") ? parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom")) : parseInt($P.css("width")) + parseInt($P.css("padding-left")) + parseInt($P.css("padding-right")); // MEASURE
 								$P.css(dim, szP).css(vis); // RESET size & visibility
 								if ($C)
 									$C.css(dim, szC);
@@ -1441,7 +1441,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 							else if (_c[pane].dir === "horz")
 								return parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom")) + oSp;
 							else // dir === "vert"
-								return $P.outerWidth() + oSp;
+								return parseInt($P.css("width")) + parseInt($P.css("padding-left")) + parseInt($P.css("padding-right")) + oSp;
 						}
 
 						/**
@@ -1466,7 +1466,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 								, altPane = _c.oppositeEdge[pane]
 								, altS = state[altPane]
 								, $altP = $Ps[altPane]
-								, altPaneSize = (!$altP || altS.isVisible === false || altS.isSliding ? 0 : (dir == "horz" ? parseInt($altP.css("height"))+parseInt($altP.css("padding-top"))+parseInt($altP.css("padding-bottom")) : $altP.outerWidth()))
+								, altPaneSize = (!$altP || altS.isVisible === false || altS.isSliding ? 0 : (dir == "horz" ? parseInt($altP.css("height"))+parseInt($altP.css("padding-top"))+parseInt($altP.css("padding-bottom")) : parseInt($altP.css("width")) + parseInt($altP.css("padding-left")) + parseInt($altP.css("padding-right"))))
 								, altPaneSpacing = ((!$altP || altS.isHidden ? 0 : options[altPane][altS.isClosed !== false ? "spacing_closed" : "spacing_open"]) || 0)
 								// limitSize prevents this pane from 'overlapping' opposite pane
 								, containerSize = (dir == "horz" ? sC.innerHeight : sC.innerWidth)
@@ -3925,7 +3925,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 								if (pane == "south")
 									$P.css({top: sC.inset.top + sC.innerHeight - (parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom")))});
 								else if (pane == "east")
-									$P.css({left: sC.inset.left + sC.innerWidth - $P.outerWidth()});
+									$P.css({left: sC.inset.left + sC.innerWidth - (parseInt($P.css("width")) + parseInt($P.css("padding-left")) + parseInt($P.css("padding-right")))});
 							} else { // animation DONE - RESET CSS
 								hideMasks();
 								$P.css({zIndex: (s.isSliding ? z.pane_sliding : z.pane_normal)});
@@ -4246,7 +4246,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 								/* Panes are sometimes not sized precisely in some browsers!?
                  * This code will resize the pane up to 3 times to nudge the pane to the correct size
                  */
-								var actual = dimName === 'width' ? $P.outerWidth() : parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom"))
+								var actual = dimName === 'width' ? parseInt($P.css("width")) + parseInt($P.css("padding-left")) + parseInt($P.css("padding-right")) : parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom"))
 									, tries = [{
 										pane: pane
 										, count: 1
@@ -4271,7 +4271,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 									thisTry.cssSize = cssSize(pane, thisTry.attempt);
 									$P.css(dimName, thisTry.cssSize);
 
-									thisTry.actual = dimName == 'width' ? $P.outerWidth() : parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom"));
+									thisTry.actual = dimName == 'width' ? parseInt($P.css("width")) + parseInt($P.css("padding-left")) + parseInt($P.css("padding-right")) : parseInt($P.css("height"))+parseInt($P.css("padding-top"))+parseInt($P.css("padding-bottom"));
 									thisTry.correct = (size === thisTry.actual);
 
 									// log attempts and alert the user of this *non-fatal error* (if showDebugMessages)
@@ -4848,7 +4848,7 @@ define('jquery-layout', ['jquery'], function(jQuery) {
 										// CENTER the toggler content SPAN
 										$T.children(".content").each(function () {
 											$TC = $(this);
-											$TC.css("marginLeft", round((width - $TC.outerWidth()) / 2)); // could be negative
+											$TC.css("marginLeft", round((width - (parseInt($TC.css("width")) + parseInt($TC.css("padding-left")) + parseInt($TC.css("padding-right")))) / 2)); // could be negative
 										});
 									} else { // east/west
 										var height = cssH($T, togLen);

@@ -594,7 +594,7 @@ define([
 				var jqObj = jQuery( this ).closest( 'table' );
 
 				var isTableRightBorder = function( table ) {
-					var cursorOffset = e.pageX - ( table.offset().left + table.outerWidth() );
+					var cursorOffset = e.pageX - ( table.offset().left + parseInt(table.css("width")) + parseInt(table.css("padding-left")) + parseInt(table.css("padding-right")) );
 					return cursorOffset > -5 && cursorOffset < 5;
 				};
 
@@ -1938,7 +1938,7 @@ define([
 			}
 
 			var $cell = jQuery(cell);
-			var width = $cell.outerWidth() - parseInt($cell.css("width"))-parseInt($cell.css("padding-left"))-parseInt($cell.css("padding-right"));
+			var width = (parseInt($cell.css("width")) + parseInt($cell.css("padding-left")) + parseInt($cell.css("padding-right"))) - parseInt($cell.css("width"))-parseInt($cell.css("padding-left"))-parseInt($cell.css("padding-right"));
 			var height = parseInt($cell.closest('tbody').css("height"))-parseInt($cell.closest('tbody').css("padding-top"))-parseInt($cell.closest('tbody').css("padding-bottom"))
 			$guide.css({
 				'height': (height < 1) ? 1 : height,
@@ -2138,13 +2138,13 @@ define([
 			var guide = jQuery( '<div></div>' );
 
 			var height = parseInt(table.children('tbody').css("height"))-parseInt(table.children('tbody').css("padding-top"))-parseInt(table.children('tbody').css("padding-bottom"));
-			var width = lastCell.outerWidth() - parseInt(lastCell.css("width"))-parseInt(lastCell.css("padding-left"))-parseInt(lastCell.css("padding-right"));
+			var width = parseInt(lastCell.css("width")) + parseInt(lastCell.css("padding-left")) + parseInt(lastCell.css("padding-right")) - parseInt(lastCell.css("width"))-parseInt(lastCell.css("padding-left"))-parseInt(lastCell.css("padding-right"));
 
 			guide.css({
 				'height': (height < 1) ? 1 : height,
 				'width': (width < 1) ? 1 : width,
 				'top': table.find('tbody').offset().top,
-				'left': table.offset().left + table.outerWidth(),
+				'left': table.offset().left + parseInt(table.css("width")) + parseInt(table.css("padding-left")) + parseInt(table.css("padding-right")),
 				'position': 'absolute',
 				'background-color': '#80B5F2'
 			});

@@ -125,7 +125,7 @@ $.extend($.simulate.prototype, {
 	findCenter: function(el) {
 		var el = $(this.target), o = el.offset();
 		return {
-			x: o.left + el.outerWidth() / 2,
+			x: o.left + (parseInt(el.css("width")) + parseInt(el.css("padding-left")) + parseInt(el.css("padding-right"))) / 2,
 			y: o.top + (parseInt(el.css("height"))+parseInt(el.css("padding-top"))+parseInt(el.css("padding-bottom"))) / 2
 		};
 	}

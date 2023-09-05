@@ -437,10 +437,11 @@ define([
 			//we have to make two runs to not change the withs the calculations are based on
 			Utils.walkCells(rows, function(ri, ci, gridCi, colspan, rowspan) {
 				var currentRow = $(rows[ri]),
-					selectorWidth = currentRow.find('.aloha-table-selectrow').outerWidth(),
+					selector = currentRow.find('.aloha-table-selectrow')
+					selectorWidth = parseInt(selector.css("width")) + parseInt(selector.css("padding-left")) + parseInt(selector.css("padding-right")),
 					rowWidth = parseInt(currentRow.css("width")) - selectorWidth,
 					currentCell = $(currentRow.children()[ci]),
-					cellWidth = currentCell.outerWidth();
+					cellWidth = parseInt(currentCell.css("width")) + parseInt(currentCell.css("padding-left")) + parseInt(currentCell.css("padding-right"));
 
 				// skip the select & cells with colspans
 				if (currentCell.hasClass('aloha-table-selectrow') || currentRow.hasClass('aloha-table-selectcolumn') || colspan > 1) {
@@ -557,7 +558,7 @@ define([
 		 * 				the border width as an integer value
 		 */
 		'getCellBorder': function(cell) {
-			return ( (cell.outerWidth() - parseInt(cell.css("width"))-parseInt(cell.css("padding-left"))-parseInt(cell.css("padding-right"))) / 2 );
+			return ( ((parseInt(cell.css("width")) + parseInt(cell.css("padding-left")) + parseInt(cell.css("padding-right"))) - parseInt(cell.css("width"))-parseInt(cell.css("padding-left"))-parseInt(cell.css("padding-right"))) / 2 );
 		},
 
 		/**

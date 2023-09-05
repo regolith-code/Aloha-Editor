@@ -348,7 +348,7 @@ function(Aloha, Plugin, jQuery, FloatingMenu, i18n, i18nCore) {
 			}
 			
 			add_box.css({
-				left : pos.left + (parseInt(el.css("width")) / 2) - (add_box.outerWidth(true) / 2),
+				left : pos.left + (parseInt(el.css("width")) / 2) - ((parseInt(add_box.css("width")) + parseInt(add_box.css("padding-left")) + parseInt(add_box.css("padding-right"))+ parseInt(add_box.css("margin-left")) + parseInt(add_box.css("margin-right"))) / 2),
 				top  : top,
 				marginTop : h,
 				opacity	  : 0
